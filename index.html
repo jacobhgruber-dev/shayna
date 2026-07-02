@@ -1,0 +1,822 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Shayna — ܫܝܢܐ</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+Syriac:wght@400;700&family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&family=Inter:wght@300;400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --parchment: #faf6ee;
+    --parchment-dark: #efe6d5;
+    --gold: #b8934e;
+    --gold-light: #d4b96a;
+    --ink: #2c2218;
+    --ink-light: #5a4a38;
+    --sage: #8a9a7b;
+    --sage-light: #e8ede3;
+    --rose: #c17d7d;
+    --rose-light: #f9f0f0;
+    --card-bg: #fffdf8;
+    --shadow: 0 1px 3px rgba(44,34,24,0.08), 0 4px 16px rgba(44,34,24,0.04);
+    --shadow-lg: 0 2px 8px rgba(44,34,24,0.10), 0 8px 32px rgba(44,34,24,0.06);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Inter', system-ui, sans-serif;
+    background: var(--parchment);
+    color: var(--ink);
+    line-height: 1.7;
+    overflow-x: hidden;
+  }
+
+  /* ── Hero ── */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 2rem;
+    background: radial-gradient(ellipse at 50% 30%, #faf6ee 0%, #efe6d5 70%, #e5d9c2 100%);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23b8934e' fill-opacity='0.04'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+    opacity: 0.5;
+    pointer-events: none;
+  }
+
+  .syriac-hero {
+    font-family: 'Noto Sans Syriac', serif;
+    font-size: clamp(5rem, 12vw, 10rem);
+    color: var(--gold);
+    line-height: 1.1;
+    margin-bottom: 0.15em;
+    animation: fadeUp 1.2s ease-out;
+    text-shadow: 0 2px 12px rgba(184,147,78,0.15);
+    direction: rtl;
+  }
+
+  .name-hero {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(3rem, 7vw, 5rem);
+    font-weight: 600;
+    color: var(--ink);
+    letter-spacing: 0.12em;
+    text-transform: lowercase;
+    animation: fadeUp 1.2s ease-out 0.2s both;
+  }
+
+  .subtitle-hero {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: clamp(1.1rem, 2vw, 1.4rem);
+    color: var(--ink-light);
+    margin-top: 0.8rem;
+    animation: fadeUp 1.2s ease-out 0.4s both;
+    max-width: 500px;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2.5rem;
+    animation: bounce 2s infinite;
+    opacity: 0.5;
+    width: 28px;
+    height: 28px;
+  }
+
+  .scroll-hint svg { stroke: var(--gold); stroke-width: 1.5; fill: none; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(24px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(8px); }
+  }
+
+  @keyframes reveal {
+    from { opacity: 0; transform: translateY(20px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes petal {
+    0%   { transform: translateY(0) rotate(0deg); opacity: 0.7; }
+    50%  { opacity: 0.3; }
+    100% { transform: translateY(-110vh) rotate(180deg); opacity: 0; }
+  }
+
+  .petals {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: hidden;
+  }
+
+  .petal {
+    position: absolute;
+    top: 110vh;
+    font-size: 1.4rem;
+    animation: petal linear infinite;
+  }
+
+  /* ── Sections ── */
+  section {
+    max-width: 780px;
+    margin: 0 auto;
+    padding: 5rem 1.5rem;
+  }
+
+  .section-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.85rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 0.6rem;
+  }
+
+  h2 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.8rem, 4vw, 2.6rem);
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 0.4em;
+    line-height: 1.25;
+  }
+
+  p {
+    color: var(--ink-light);
+    font-weight: 300;
+    margin-bottom: 1.2em;
+    font-size: 1.05rem;
+  }
+
+  /* ── Meaning cards ── */
+  .meaning-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 1.2rem;
+    margin: 2.5rem 0;
+  }
+
+  .meaning-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    padding: 1.6rem 1.4rem;
+    box-shadow: var(--shadow);
+    text-align: center;
+    transition: transform 0.25s, box-shadow 0.25s;
+    cursor: default;
+  }
+
+  .meaning-card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .meaning-icon {
+    font-size: 2.2rem;
+    margin-bottom: 0.6rem;
+  }
+
+  .meaning-word {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: var(--ink);
+    margin-bottom: 0.3rem;
+  }
+
+  .meaning-desc {
+    font-size: 0.9rem;
+    color: var(--ink-light);
+  }
+
+  /* ── Garden metaphor ── */
+  .metaphor-block {
+    background: var(--sage-light);
+    border-radius: 14px;
+    padding: 2.2rem 2rem;
+    margin: 2.5rem 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .metaphor-block::before {
+    content: '';
+    position: absolute;
+    top: -20px;
+    right: -20px;
+    width: 80px;
+    height: 80px;
+    background: var(--sage);
+    opacity: 0.08;
+    border-radius: 50%;
+  }
+
+  .metaphor-block p {
+    font-style: italic;
+    font-size: 1.08rem;
+    position: relative;
+    z-index: 1;
+  }
+
+  .metaphor-block .syriac-inline {
+    font-family: 'Noto Sans Syriac', serif;
+    font-size: 1.4rem;
+    color: var(--gold);
+    font-style: normal;
+    direction: rtl;
+    display: inline-block;
+  }
+
+  /* ── Verse Gallery ── */
+  .verse-gallery {
+    margin: 2.5rem 0;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .verse-card {
+    background: var(--card-bg);
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    overflow: hidden;
+    cursor: pointer;
+    transition: box-shadow 0.3s, transform 0.2s;
+    border-left: 3px solid transparent;
+    transition: border-color 0.3s, box-shadow 0.3s, transform 0.2s;
+  }
+
+  .verse-card:hover {
+    box-shadow: var(--shadow-lg);
+    transform: translateX(3px);
+  }
+
+  .verse-card.expanded {
+    border-left-color: var(--gold);
+    box-shadow: var(--shadow-lg);
+  }
+
+  .verse-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1.2rem 1.5rem;
+    gap: 1rem;
+  }
+
+  .verse-ref {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--ink);
+    white-space: nowrap;
+  }
+
+  .verse-teaser {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1rem;
+    color: var(--ink-light);
+    flex: 1;
+    text-align: right;
+  }
+
+  .verse-expand-icon {
+    font-size: 1rem;
+    color: var(--gold);
+    transition: transform 0.3s;
+    min-width: 20px;
+    text-align: center;
+  }
+
+  .verse-card.expanded .verse-expand-icon {
+    transform: rotate(180deg);
+  }
+
+  .verse-body {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.45s ease, padding 0.45s ease;
+    padding: 0 1.5rem;
+  }
+
+  .verse-card.expanded .verse-body {
+    max-height: 500px;
+    padding: 0 1.5rem 1.5rem;
+  }
+
+  .verse-syriac {
+    font-family: 'Noto Sans Syriac', serif;
+    font-size: 1.35rem;
+    color: var(--ink);
+    line-height: 2;
+    margin-bottom: 0.8rem;
+    direction: rtl;
+    text-align: right;
+    border-bottom: 1px solid var(--parchment-dark);
+    padding-bottom: 0.8rem;
+  }
+
+  .verse-english {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.1rem;
+    color: var(--ink-light);
+    margin-bottom: 0.5rem;
+  }
+
+  .verse-note {
+    font-size: 0.82rem;
+    color: var(--gold);
+    margin-top: 0.4rem;
+  }
+
+  /* ── Jesus Section ── */
+  .jesus-block {
+    background: var(--card-bg);
+    border-radius: 14px;
+    padding: 2.2rem 2rem;
+    box-shadow: var(--shadow);
+    margin: 2.5rem 0;
+    border-top: 3px solid var(--gold);
+  }
+
+  .jesus-block h3 {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.5rem;
+    font-weight: 600;
+    margin-bottom: 0.8em;
+  }
+
+  .inline-syriac {
+    font-family: 'Noto Sans Syriac', serif;
+    font-size: 1.2rem;
+    color: var(--gold);
+    direction: rtl;
+    display: inline-block;
+  }
+
+  /* ── Blessing ── */
+  .blessing {
+    text-align: center;
+    padding: 5rem 1.5rem 6rem;
+    background: linear-gradient(to bottom, var(--parchment), var(--parchment-dark));
+    position: relative;
+  }
+
+  .blessing .syriac-blessing {
+    font-family: 'Noto Sans Syriac', serif;
+    font-size: clamp(2rem, 5vw, 3.5rem);
+    color: var(--gold);
+    margin-bottom: 0.6rem;
+    direction: rtl;
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s, transform 0.8s;
+  }
+
+  .blessing .syriac-blessing.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  .blessing .english-blessing {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic;
+    font-size: 1.3rem;
+    color: var(--ink-light);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s 0.2s, transform 0.8s 0.2s;
+  }
+
+  .blessing .english-blessing.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* ── Floating Syriac letters ── */
+  .floating-letters {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 0;
+  }
+
+  .floating-letter {
+    position: absolute;
+    font-family: 'Noto Sans Syriac', serif;
+    color: var(--gold);
+    opacity: 0;
+    animation: floatLetter 18s linear infinite;
+  }
+
+  @keyframes floatLetter {
+    0%   { opacity: 0; transform: translateY(0) rotate(0deg); }
+    2%   { opacity: 0.06; }
+    30%  { opacity: 0.06; }
+    50%  { opacity: 0.03; }
+    70%  { opacity: 0.06; }
+    98%  { opacity: 0.06; }
+    100% { opacity: 0; transform: translateY(-100vh) rotate(180deg); }
+  }
+
+  /* ── Word cloud ── */
+  .word-cloud {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem 1.5rem;
+    margin: 2rem 0;
+    padding: 1rem;
+  }
+
+  .word-chip {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    padding: 0.4rem 1rem;
+    border-radius: 20px;
+    background: var(--card-bg);
+    color: var(--ink-light);
+    box-shadow: var(--shadow);
+    cursor: default;
+    transition: all 0.25s;
+    border: 1px solid transparent;
+  }
+
+  .word-chip:hover {
+    border-color: var(--gold-light);
+    color: var(--ink);
+    transform: scale(1.05);
+  }
+
+  .word-chip.syriac {
+    font-family: 'Noto Sans Syriac', serif;
+    font-size: 1.15rem;
+    color: var(--gold);
+    direction: rtl;
+  }
+
+  /* ── Footer ── */
+  footer {
+    text-align: center;
+    padding: 2rem;
+    font-size: 0.8rem;
+    color: var(--ink-light);
+    opacity: 0.6;
+  }
+
+  /* ── Responsive ── */
+  @media (max-width: 600px) {
+    section { padding: 3rem 1.2rem; }
+    .meaning-grid { grid-template-columns: 1fr 1fr; }
+    .verse-header { flex-direction: column; align-items: flex-start; gap: 0.3rem; }
+    .verse-teaser { text-align: left; }
+  }
+
+  /* ── Active nav dot ── */
+  .nav-dots {
+    position: fixed;
+    right: 1.2rem;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 0.8rem;
+    z-index: 10;
+  }
+
+  .nav-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--parchment-dark);
+    cursor: pointer;
+    transition: all 0.3s;
+  }
+
+  .nav-dot.active { background: var(--gold); transform: scale(1.4); }
+
+  @media (max-width: 768px) {
+    .nav-dots { display: none; }
+    .floating-letters { display: none; }
+  }
+
+  /* ── Print ── */
+  @media print {
+    .nav-dots, .floating-letters, .petals, .scroll-hint { display: none; }
+    .verse-card { break-inside: avoid; box-shadow: none; border: 1px solid #ddd; }
+    .verse-body { max-height: none !important; padding: 0 1.5rem 1.5rem !important; }
+    body { background: white; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Floating Syriac letters -->
+<div class="floating-letters" aria-hidden="true">
+  <span class="floating-letter" style="left:8%; animation-delay:0s; font-size:2.5rem;">ܫ</span>
+  <span class="floating-letter" style="left:22%; animation-delay:3s; font-size:1.8rem;">ܝ</span>
+  <span class="floating-letter" style="left:45%; animation-delay:7s; font-size:2.2rem;">ܢ</span>
+  <span class="floating-letter" style="left:65%; animation-delay:11s; font-size:2rem;">ܐ</span>
+  <span class="floating-letter" style="left:78%; animation-delay:5s; font-size:1.6rem;">ܫ</span>
+  <span class="floating-letter" style="left:35%; animation-delay:13s; font-size:2.8rem;">ܝ</span>
+  <span class="floating-letter" style="left:15%; animation-delay:9s; font-size:1.9rem;">ܢ</span>
+  <span class="floating-letter" style="left:85%; animation-delay:15s; font-size:2.1rem;">ܐ</span>
+</div>
+
+<!-- Navigation dots -->
+<nav class="nav-dots" aria-label="Section navigation">
+  <div class="nav-dot active" data-target="hero"></div>
+  <div class="nav-dot" data-target="meaning"></div>
+  <div class="nav-dot" data-target="verses"></div>
+  <div class="nav-dot" data-target="jesus"></div>
+  <div class="nav-dot" data-target="blessing"></div>
+</nav>
+
+<!-- ── Hero ── -->
+<section class="hero" id="hero">
+  <div class="petals" aria-hidden="true">
+    <span class="petal" style="left:12%; animation-duration:14s; animation-delay:0s;">🌸</span>
+    <span class="petal" style="left:28%; animation-duration:18s; animation-delay:3s;">🌿</span>
+    <span class="petal" style="left:44%; animation-duration:16s; animation-delay:6s;">🌺</span>
+    <span class="petal" style="left:62%; animation-duration:20s; animation-delay:9s;">✿</span>
+    <span class="petal" style="left:78%; animation-duration:15s; animation-delay:2s;">🌼</span>
+    <span class="petal" style="left:90%; animation-duration:17s; animation-delay:7s;">🌷</span>
+  </div>
+
+  <div class="syriac-hero">ܫܝܢܐ</div>
+  <div class="name-hero">shayna</div>
+  <div class="subtitle-hero">Peace. Tranquility. A garden where there was once wilderness.</div>
+  <div class="scroll-hint">
+    <svg viewBox="0 0 28 28"><polyline points="4,10 14,20 24,10"/></svg>
+  </div>
+</section>
+
+<!-- ── Meaning ── -->
+<section id="meaning">
+  <div class="section-label">The Name</div>
+  <h2>What Shayna Means</h2>
+  <p>Shayna comes from the ancient Aramaic word <span class="inline-syriac">ܫܝܢܐ</span> (šaynā). It's a word that carries the warmth of tranquility, the safety of home, the quiet beauty of a cultivated garden. It doesn't just mean the <em>absence</em> of conflict — it means the <em>presence</em> of peace. The kind of peace that settles into a room and makes everyone breathe a little deeper.</p>
+
+  <div class="meaning-grid">
+    <div class="meaning-card">
+      <div class="meaning-icon">🕊️</div>
+      <div class="meaning-word">Peace</div>
+      <div class="meaning-desc">Quietness of heart; the stillness after a storm</div>
+    </div>
+    <div class="meaning-card">
+      <div class="meaning-icon">🏡</div>
+      <div class="meaning-word">Tranquility</div>
+      <div class="meaning-desc">The feeling of being safe, at home, at rest</div>
+    </div>
+    <div class="meaning-card">
+      <div class="meaning-icon">🌿</div>
+      <div class="meaning-word">Cultivated Land</div>
+      <div class="meaning-desc">A garden tamed from wilderness — life made beautiful</div>
+    </div>
+    <div class="meaning-card">
+      <div class="meaning-icon">🤲</div>
+      <div class="meaning-word">Reconciliation</div>
+      <div class="meaning-desc">The act of making peace; bringing people together</div>
+    </div>
+  </div>
+
+  <div class="metaphor-block">
+    <p>In ancient Aramaic, the opposite of <span class="syriac-inline">ܫܝܢܐ</span> isn't "war" — it's <em>wilderness</em>. The word carries the image of a garden cultivated from wild land, of chaos brought into order, of something wild becoming gentle. That's what peace truly is: not the absence of something, but the creation of something beautiful.</p>
+  </div>
+</section>
+
+<!-- ── Word Cloud ── -->
+<section style="padding-top:0;">
+  <div class="word-cloud">
+    <span class="word-chip">Peace</span>
+    <span class="word-chip">Tranquility</span>
+    <span class="word-chip">Quietness</span>
+    <span class="word-chip">Security</span>
+    <span class="word-chip">Gentleness</span>
+    <span class="word-chip">Harmony</span>
+    <span class="word-chip">Rest</span>
+    <span class="word-chip">Stillness</span>
+    <span class="word-chip syriac">ܫܝܢܐ</span>
+    <span class="word-chip">Home</span>
+    <span class="word-chip">Safety</span>
+    <span class="word-chip">Wholeness</span>
+    <span class="word-chip">Reconciliation</span>
+  </div>
+</section>
+
+<!-- ── Verses ── -->
+<section id="verses">
+  <div class="section-label">In the Scriptures</div>
+  <h2>Where Shayna Appears</h2>
+  <p>The word <span class="inline-syriac">ܫܝܢܐ</span> appears in some of the most tender passages of the ancient Syriac Bible — a translation made by the earliest Aramaic-speaking Christians. Here are the verses where it shines. Tap any card to see the original Syriac.</p>
+
+  <div class="verse-gallery">
+
+    <!-- Ephesians 2:14 -->
+    <div class="verse-card" tabindex="0" role="button" aria-expanded="false">
+      <div class="verse-header">
+        <span class="verse-ref">Ephesians 2:14</span>
+        <span class="verse-teaser">"He Himself is our peace..."</span>
+        <span class="verse-expand-icon">▼</span>
+      </div>
+      <div class="verse-body">
+        <div class="verse-syriac">ܗܽܘܝܽܘ ܓ݁ܶܝܪ ܫܰܝܢܰܢ ܗܰܘ ܕ݁ܰܥܒ݂ܰܕ݂ ܬ݁ܰܪܬ݁ܰܝܗܶܝܢ ܚܕ݂ܳܐ ܘܰܫܪܳܐ ܣܝܳܓ݂ܳܐ</div>
+        <div class="verse-english">For He Himself is our peace — He who has made the two into one, and has broken down the dividing wall.</div>
+        <div class="verse-note">Here the word appears as "šaynan" — "our peace" — with a personal, intimate suffix. Christ doesn't just give peace; He <em>is</em> our peace.</div>
+      </div>
+    </div>
+
+    <!-- Mark 9:50 -->
+    <div class="verse-card" tabindex="0" role="button" aria-expanded="false">
+      <div class="verse-header">
+        <span class="verse-ref">Mark 9:50</span>
+        <span class="verse-teaser">"Be at peace with one another..."</span>
+        <span class="verse-expand-icon">▼</span>
+      </div>
+      <div class="verse-body">
+        <div class="verse-syriac">ܫܰܦ݁ܺܝܪܳܐ ܗ݈ܝ ܡܶܠܚܳܐ ... ܘܰܒ݂ܫܰܝܢܳܐ ܗܘܰܘ ܚܰܕ݂ ܥܰܡ ܚܰܕ݂</div>
+        <div class="verse-english">Salt is good... and be at peace with one another.</div>
+        <div class="verse-note">Jesus's own instruction to his disciples — to let shayna define their life together.</div>
+      </div>
+    </div>
+
+    <!-- James 3:18 -->
+    <div class="verse-card" tabindex="0" role="button" aria-expanded="false">
+      <div class="verse-header">
+        <span class="verse-ref">James 3:18</span>
+        <span class="verse-teaser">"The fruit of righteousness is sown in peace..."</span>
+        <span class="verse-expand-icon">▼</span>
+      </div>
+      <div class="verse-body">
+        <div class="verse-syriac">ܦ݁ܺܐܪܶܐ ܕ݁ܶܝܢ ܕ݁ܙܰܕ݁ܺܝܩܽܘܬ݂ܳܐ ܒ݁ܫܰܝܢܳܐ ܡܶܙܕ݁ܰܪܥܺܝܢ ܠܰܐܝܠܶܝܢ ܕ݁ܥܳܒ݂ܕ݁ܺܝܢ ܫܠܳܡܳܐ</div>
+        <div class="verse-english">The fruit of righteousness is sown in peace by those who make peace.</div>
+        <div class="verse-note">This verse uses both words for peace — shayna as the soil, the quiet ground where goodness grows.</div>
+      </div>
+    </div>
+
+    <!-- Colossians 1:20 -->
+    <div class="verse-card" tabindex="0" role="button" aria-expanded="false">
+      <div class="verse-header">
+        <span class="verse-ref">Colossians 1:20</span>
+        <span class="verse-teaser">"He made peace through the blood of His cross..."</span>
+        <span class="verse-expand-icon">▼</span>
+      </div>
+      <div class="verse-body">
+        <div class="verse-syriac">ܘܫܰܝܶܢ ܒ݁ܰܕ݂ܡܳܐ ܕ݁ܰܙܩܺܝܦ݂ܶܗ</div>
+        <div class="verse-english">And He made peace through the blood of His cross.</div>
+        <div class="verse-note">The verb form — "He pacified, He reconciled" — captures the active work of making peace. Not a passive state, but a creative, restoring act.</div>
+      </div>
+    </div>
+
+    <!-- Acts 10:36 -->
+    <div class="verse-card" tabindex="0" role="button" aria-expanded="false">
+      <div class="verse-header">
+        <span class="verse-ref">Acts 10:36</span>
+        <span class="verse-teaser">"Peace and tranquility through Jesus Christ..."</span>
+        <span class="verse-expand-icon">▼</span>
+      </div>
+      <div class="verse-body">
+        <div class="verse-syriac">ܘܣܰܒ݁ܰܪ ܐܶܢܽܘܢ ܫܠܳܡܳܐ ܘܫܰܝܢܳܐ ܒ݁ܝܰܕ݂ ܝܶܫܽܘܥ ܡܫܺܝܚܳܐ</div>
+        <div class="verse-english">...announcing to them peace and tranquility through Jesus Christ.</div>
+        <div class="verse-note">Two words for peace side by side — shlama (wholeness, well-being) and shayna (tranquility, quietness). Together they paint the full picture of what God gives.</div>
+      </div>
+    </div>
+
+    <!-- 2 Corinthians 13:11 -->
+    <div class="verse-card" tabindex="0" role="button" aria-expanded="false">
+      <div class="verse-header">
+        <span class="verse-ref">2 Corinthians 13:11</span>
+        <span class="verse-teaser">"Let peace be among you, and the God of love and peace..."</span>
+        <span class="verse-expand-icon">▼</span>
+      </div>
+      <div class="verse-body">
+        <div class="verse-syriac">ܘܰܐܘܝܽܘܬ݂ܳܐ ܘܫܰܝܢܳܐ ܢܶܗܘܶܐ ܒ݁ܟ݂ܽܘܢ ܘܰܐܠܳܗܳܐ ܕ݁ܚܽܘܒ݁ܳܐ ܘܰܕ݂ܫܰܠܡܽܘܬ݂ܳܐ ܢܶܗܘܶܐ ܥܰܡܟ݂ܽܘܢ</div>
+        <div class="verse-english">Let harmony and peace be among you, and the God of love and of peace will be with you.</div>
+        <div class="verse-note">A beautiful blessing — peace among us flows from the God who is peace itself.</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ── Jesus connection ── -->
+<section id="jesus">
+  <div class="section-label">Did Jesus Say This?</div>
+  <h2>A Word Jesus Would Have Known</h2>
+
+  <div class="jesus-block">
+    <h3>Jesus Spoke Aramaic</h3>
+    <p>Jesus's everyday language was Aramaic — the same family of languages that includes Syriac, the ancient tongue in which the word <span class="inline-syriac">ܫܝܢܐ</span> is preserved. The earliest Aramaic-speaking Christians, translating Jesus's teachings just a generation or two after him, chose this word to capture his message of peace.</p>
+    <p>While we cannot know with certainty the exact syllables that fell from Jesus's lips, the earliest Aramaic translations of his words — made by people whose language was nearly identical to his own — use <span class="inline-syriac">ܫܝܢܐ</span> to express the peace he taught. They heard something in this word that captured what he meant.</p>
+  </div>
+
+  <div class="jesus-block">
+    <h3>Why This Word Matters</h3>
+    <p>In Jesus's world, peace wasn't an abstract idea — it was as tangible as a garden. The root meaning of shayna is to <em>tame</em>, to <em>cultivate</em>, to turn wilderness into somewhere you can live. When Jesus taught his followers to be peacemakers, to be at peace with one another, to let peace dwell in their hearts — the early Aramaic church reached for this word.</p>
+    <p>Shayna is the peace that doesn't just end a fight — it <em>makes a home</em>. It's the peace of a garden after the weeds are pulled, of a child sleeping safely, of a heart that has found its rest.</p>
+  </div>
+</section>
+
+<!-- ── Blessing ── -->
+<section class="blessing" id="blessing">
+  <div class="section-label">A Blessing for Shayna</div>
+  <div class="syriac-blessing" id="syriacBlessing">ܫܰܝܢܳܐ ܢܶܗܘܶܐ ܥܰܡܶܟ݂</div>
+  <div class="english-blessing" id="englishBlessing">Shayna — may peace be with you.</div>
+</section>
+
+<footer>
+  Sources: Comprehensive Aramaic Lexicon, Peshitta New Testament (Syriac Bible), SEDRA Lexical Database · Created with love
+</footer>
+
+<script>
+  // ── Verse card accordion ──
+  document.querySelectorAll('.verse-card').forEach(card => {
+    card.addEventListener('click', () => {
+      const wasExpanded = card.classList.contains('expanded');
+      // Close all
+      document.querySelectorAll('.verse-card.expanded').forEach(c => c.classList.remove('expanded'));
+      // Toggle this one (unless it was already open)
+      if (!wasExpanded) {
+        card.classList.add('expanded');
+        card.setAttribute('aria-expanded', 'true');
+        // Smooth scroll to expanded card
+        setTimeout(() => {
+          card.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 100);
+      } else {
+        card.setAttribute('aria-expanded', 'false');
+      }
+    });
+
+    // Keyboard support
+    card.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        card.click();
+      }
+    });
+  });
+
+  // ── Blessing reveal on scroll ──
+  const blessingObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        document.getElementById('syriacBlessing').classList.add('visible');
+        document.getElementById('englishBlessing').classList.add('visible');
+      }
+    });
+  }, { threshold: 0.5 });
+
+  const blessingSection = document.getElementById('blessing');
+  if (blessingSection) blessingObserver.observe(blessingSection);
+
+  // ── Navigation dots ──
+  const sections = ['hero', 'meaning', 'verses', 'jesus', 'blessing'];
+  const dots = document.querySelectorAll('.nav-dot');
+
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const id = entry.target.id;
+        dots.forEach(dot => {
+          dot.classList.toggle('active', dot.dataset.target === id);
+        });
+      }
+    });
+  }, { threshold: 0.4 });
+
+  sections.forEach(id => {
+    const el = document.getElementById(id);
+    if (el) sectionObserver.observe(el);
+  });
+
+  dots.forEach(dot => {
+    dot.addEventListener('click', () => {
+      const target = document.getElementById(dot.dataset.target);
+      if (target) {
+        target.scrollIntoView({ behavior: 'smooth' });
+      }
+    });
+  });
+</script>
+
+</body>
+</html>
