@@ -396,6 +396,22 @@
     transform: translateY(0);
   }
 
+  .blessing .translit-blessing {
+    font-family: 'Inter', system-ui, sans-serif;
+    font-size: 1.15rem;
+    font-weight: 300;
+    color: var(--ink-light);
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.8s 0.15s, transform 0.8s 0.15s;
+    margin-bottom: 0.7rem;
+  }
+
+  .blessing .translit-blessing.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
   .blessing .english-blessing {
     font-family: 'Cormorant Garamond', serif;
     font-style: italic;
@@ -403,7 +419,7 @@
     color: var(--ink-light);
     opacity: 0;
     transform: translateY(20px);
-    transition: opacity 0.8s 0.2s, transform 0.8s 0.2s;
+    transition: opacity 0.8s 0.25s, transform 0.8s 0.25s;
   }
 
   .blessing .english-blessing.visible {
@@ -739,6 +755,7 @@
 <section class="blessing" id="blessing">
   <div class="section-label">A Blessing for Shayna</div>
   <div class="syriac-blessing" id="syriacBlessing">ܫܰܝܢܳܐ ܢܶܗܘܶܐ ܥܰܡܶܟ݂</div>
+  <div class="translit-blessing" id="translitBlessing">Shaynā nehwē ʿammekh &nbsp;·&nbsp; <em>SHAY-nah neh-WAY am-MEKH</em></div>
   <div class="english-blessing" id="englishBlessing">Shayna — may peace be with you.</div>
 </section>
 
@@ -780,6 +797,7 @@
     entries.forEach(entry => {
       if (entry.isIntersecting) {
         document.getElementById('syriacBlessing').classList.add('visible');
+        document.getElementById('translitBlessing').classList.add('visible');
         document.getElementById('englishBlessing').classList.add('visible');
       }
     });
